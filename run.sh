@@ -75,7 +75,8 @@ if [ -n "$USER_ID" ]; then
 else
     # If the user does not exist, create it
     echo "User '$USER_NAME' not found. Creating..."
-    sudo useradd -G $GROUP_NAME $USER_NAME
+    sudo useradd -m -G $GROUP_NAME $USER_NAME # -m = creates home folder; -G = attach user to group.
+    sudo passwd "$USER_NAME"
 
     # Re-fetch the user ID after creation
     USER_ID=$(get_group_id $USER_NAME)
