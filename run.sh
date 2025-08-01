@@ -26,6 +26,26 @@ echo_red_x_error(){
 }
 
 # ------------------------------------------------------------------------------
+# Set default keyboard layout for new users via dconf and .xprofile
+# ------------------------------------------------------------------------------
+
+# Export current keyboard layout settings to a file inside /etc/skel
+dconf dump /org/gnome/desktop/input-sources/ > /etc/skel/layout.dconf
+
+# Create an .xprofile script that will apply the layout when a new user logs in
+cat > "/etc/skel/.xprofile" <<'EOF'
+#!/bin/bash
+
+if [ -f "$HOME/layout.dconf" ]; then
+  dconf load /org/gnome/desktop/input-sources/ < "$HOME/layout.dconf"
+  rm "$HOME/layout.dconf"
+fi
+EOF
+
+# Make the .xprofile script executable
+sudo chmod +x "/etc/skel/.xprofile"
+
+# ------------------------------------------------------------------------------
 # Global variables to setup deep work environment
 # ------------------------------------------------------------------------------
 
@@ -75,7 +95,7 @@ if [ -n "$USER_ID" ]; then
 else
     # If the user does not exist, create it
     echo "User '$USER_NAME' not found. Creating..."
-    sudo useradd -m -G $GROUP_NAME $USER_NAME # -m = creates home folder; -G = attach user to group.
+    sudo useradd -m -G "$GROUP_NAME,sudo" -s /bin/bash $USER_NAME # -m = creates home folder; -G = attach user to group.
     sudo passwd "$USER_NAME"
 
     # Re-fetch the user ID after creation
@@ -85,3 +105,50 @@ else
     echo_green_mark "User '$USER_NAME' (with UID $USER_ID) created successfully and appended to group '$GROUP_NAME'($GROUP_ID)"
 fi
 
+# ------------------------------------------------------------------------------
+# Variables
+# ------------------------------------------------------------------------------
+
+FILE_SH="focusd.sh"
+SERVICE="focusd.service"
+LOG="focusd.log"
+
+# ------------------------------------------------------------------------------
+# Install executable script to /usr/local/bin and make it executable
+# ------------------------------------------------------------------------------
+
+sudo cp "$FILE_SH" "/usr/local/bin/$FILE_SH"
+sudo chmod +x "/usr/local/bin/$FILE_SH"
+
+# ------------------------------------------------------------------------------
+# Recreate the log file
+# ------------------------------------------------------------------------------
+
+sudo rm -rf "/var/log/$LOG"
+sudo touch "/var/log/$LOG"
+
+# ------------------------------------------------------------------------------
+# Stop existing systemd service (if running)
+# ------------------------------------------------------------------------------
+
+sudo systemctl stop "$SERVICE" 2>/dev/null || true
+
+# ------------------------------------------------------------------------------
+# Copy systemd service file to system directory
+# ------------------------------------------------------------------------------
+
+sudo cp "$SERVICE" "/etc/systemd/system/$SERVICE"
+
+# ------------------------------------------------------------------------------
+# Reload systemd, enable and start the service
+# ------------------------------------------------------------------------------
+
+sudo systemctl daemon-reload
+sudo systemctl enable "$SERVICE"
+sudo systemctl start "$SERVICE"
+
+# ------------------------------------------------------------------------------
+# Show the service status
+# ------------------------------------------------------------------------------
+
+sudo systemctl status "$SERVICE"

@@ -1,0 +1,14 @@
+[Unit]
+Description=Rodar script global no login do usuário
+After=multi-user.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/focusd.sh
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target
