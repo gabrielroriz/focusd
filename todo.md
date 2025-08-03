@@ -1,0 +1,2 @@
+- [ ] Write a `README.md` file to help others understand what this project is and how it works.
+- [ ] Update the installation script to call the host generation scripts and update the hosts files.

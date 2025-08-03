@@ -45,6 +45,7 @@ GROUP_NAME="deep-group"
 
 # Default user for deep work
 USER_NAME="deep-worker"
+USER_FULL_NAME="Deep Worker"
 
 # ------------------------------------------------------------------------------
 # Ensure required group exists
@@ -87,6 +88,7 @@ else
     # If the user does not exist, create it
     echo "User '$USER_NAME' not found. Creating..."
     sudo useradd -m -G "$GROUP_NAME,sudo" -s /bin/bash $USER_NAME # -m = creates home folder; -G = attach user to group.
+    sudo usermod -c "$USER_FULL_NAME" "$USER_NAME"
     sudo passwd "$USER_NAME"
 
     # Re-fetch the user ID after creation
