@@ -81,7 +81,7 @@ dispatch_notify() {
 
   # Envia a notificação
   sudo -u "$user" DISPLAY="$display" DBUS_SESSION_BUS_ADDRESS="unix:path=$dbus_addr" \
-    notify-send -i system-run "Focusd" "$message"
+    notify-send -i focusd "Focusd" "$message"
 }
 
 # ------------------------------------------------------------------------------

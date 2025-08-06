@@ -107,6 +107,28 @@ SERVICE="focusd.service"
 LOG="focusd.log"
 
 # ------------------------------------------------------------------------------
+# Install focusd icon into hicolor icon theme
+# ------------------------------------------------------------------------------
+
+ICON_SOURCE="./assets/focusd.svg"
+ICON_NAME="focusd.svg"
+ICON_TARGET_DIR="/usr/share/icons/hicolor/scalable/apps"
+ICON_TARGET_PATH="$ICON_TARGET_DIR/$ICON_NAME"
+
+# Create target directory if it doesn't exist
+if [ ! -d "$ICON_TARGET_DIR" ]; then
+    sudo mkdir -p "$ICON_TARGET_DIR"
+fi
+
+# Copy the icon to the hicolor theme directory
+sudo cp "$ICON_SOURCE" "$ICON_TARGET_PATH"
+
+# Update icon cache
+sudo gtk-update-icon-cache /usr/share/icons/hicolor
+
+echo_success "Icon '$ICON_NAME' installed to '$ICON_TARGET_PATH' and icon cache updated."
+
+# ------------------------------------------------------------------------------
 # Install executable script to /usr/local/bin and make it executable
 # ------------------------------------------------------------------------------
 
