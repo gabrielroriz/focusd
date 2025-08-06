@@ -1,5 +1,5 @@
 [Unit]
-Description=Rodar script global no login do usuário
+Description=Updates /etc/hosts based on active user group
 After=multi-user.target
 
 [Service]

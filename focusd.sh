@@ -3,7 +3,6 @@
 LOG_FILE="/var/log/focusd.log"
 exec >> "$LOG_FILE" 2>&1
 
-
 # Estilo para negrito
 BOLD='\e[1m'
 RESET='\e[0m'
@@ -47,6 +46,16 @@ echo_log_fatal() {
 echo_log_info "STARTED" "Script iniciado por: $(whoami) (UID: $(id -u)) no host: $(hostname)"
 
 # ------------------------------------------------------------------------------
+# Function: Extract filename from full path
+# ------------------------------------------------------------------------------
+get_filename() {
+  local path="$1"
+  local filename
+  filename=$(basename "$path")
+  echo "$filename"
+}
+
+# ------------------------------------------------------------------------------
 # Function to dispatch gui notification through dbus
 # ------------------------------------------------------------------------------
 
@@ -65,14 +74,14 @@ dispatch_notify() {
 
   # Determina o DISPLAY (buscando na sessão gráfica)
   local display
-  display=$(w -h | awk -v u="$user" '$1 == u { print $3; exit }')
+  display=$(loginctl show-user "$user" --property=Display --value)
 
   # Caminho do D-Bus
   local dbus_addr="/run/user/$uid/bus"
 
   # Envia a notificação
   sudo -u "$user" DISPLAY="$display" DBUS_SESSION_BUS_ADDRESS="unix:path=$dbus_addr" \
-    notify-send "Notificação" "$message"
+    notify-send -i system-run "Focusd" "$message"
 }
 
 # ------------------------------------------------------------------------------
@@ -90,11 +99,11 @@ update_hosts() {
   if id -nG "$USERNAME" | grep -qw "$TARGET_GROUP"; then
     echo_log_success "HOSTS UPDATED" "User '$USERNAME' belongs to group $TARGET_GROUP. Applying restricted hosts."
     cp "$RESTRICTED_HOSTS" "$TARGET_HOSTS"
-    dispatch_notify "$USERNAME" "Access to external sites has been restricted ($RESTRICTED_HOSTS)."
+    dispatch_notify "$USERNAME" "Access to external sites has been restricted ($(get_filename "$RESTRICTED_HOSTS"))."
   else
     echo_log_success "HOSTS UPDATED" "User '$USERNAME' does NOT belong to group $TARGET_GROUP. Applying default hosts."
     cp "$DEFAULT_HOSTS" "$TARGET_HOSTS"
-    dispatch_notify "$USERNAME" "Access to external sites has been restored ($DEFAULT_HOSTS)."
+    dispatch_notify "$USERNAME" "Access to external sites has been restored ($(get_filename "$DEFAULT_HOSTS"))."
   fi
 }
 
