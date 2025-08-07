@@ -10,7 +10,7 @@ source "./user/create_group.sh"
 source "./user/create_user.sh"
 
 source "./hosts/prestart.sh"
-source "./hosts/create_host_restricted.sh"
+source "./hosts/create_hosts_restricted.sh"
 source "./hosts/update_etc_hosts.sh"
 
 source "./systemd/install_icon.sh"
