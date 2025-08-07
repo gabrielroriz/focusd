@@ -38,3 +38,4 @@ readonly HOSTS_BASE_FILE="../hosts/hosts.base"
 
 readonly DOMAINS_DOPAMINE="../domains/domain-list-dopamine.txt"
 readonly DOMAINS_ADULTS="../domains/domain-list-adults.txt"
+readonly DOMAINS_SOCIAL_MEDIA="../domains/domain-list-social-media.txt"
