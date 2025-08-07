@@ -2,4 +2,4 @@
 
 set -e
 
-mv "$HOSTS_RESTRICTED_FILE" "/etc/hosts.restricted"
+cp "$HOSTS_RESTRICTED_FILE" "/etc/hosts.restricted"
