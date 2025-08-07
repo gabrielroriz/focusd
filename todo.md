@@ -2,3 +2,4 @@
 - [ ] Update the installation script to call the host generation scripts and update the hosts files.
 - [ ] Create CLI tool to manage focus service.
 - [ ] Create an app to present systemd status focusd in tray (menu).
+- [ ] Reorganize code in multiple shell scripts

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 LOG_FILE="/var/log/focusd.log"
+
 exec >> "$LOG_FILE" 2>&1
 
 # Estilo para negrito

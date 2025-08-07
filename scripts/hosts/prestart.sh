@@ -1,27 +1,5 @@
 #!/bin/bash
-
 set -e
-
-# ------------------------------------------------------------------------------
-# Error logging configuration
-# ------------------------------------------------------------------------------
-LOG_FILE="./logs/hosts.log"
-exec 2>>"$LOG_FILE"
-
-# ------------------------------------------------------------------------------
-# Load echo helpers (colors and symbols)
-# ------------------------------------------------------------------------------
-source ./echo.sh
-
-# ------------------------------------------------------------------------------
-# Paths to used files
-# ------------------------------------------------------------------------------
-HOSTS_RESTRICTED_FILE="./hosts/hosts.restricted"
-HOSTS_DEFAULT_FILE="./hosts/hosts.default"
-HOSTS_BASE_FILE="./hosts/hosts.base"
-
-DOMAINS_DOPAMINE="./domains/domain-list-dopamine.txt"
-DOMAINS_ADULTS="./domains/domain-list-adults.txt"
 
 # ------------------------------------------------------------------------------
 # Function: Extract filename from full path
@@ -120,18 +98,3 @@ add_hosts_base_to_file(){
   cat "$HOSTS_BASE_FILE" >> "$file" \
   && echo_success "Base hosts added to $(get_filename $file)."
 }
-
-# ------------------------------------------------------------------------------
-# Hosts Restricted generation
-# ------------------------------------------------------------------------------
-
-remove_file "$HOSTS_RESTRICTED_FILE"
-
-add_comment "This hosts file enforces full network restrictions for focus mode." "$HOSTS_RESTRICTED_FILE"
-
-add_hosts_base_to_file "$HOSTS_RESTRICTED_FILE"
-
-add_domains_to_host "$HOSTS_RESTRICTED_FILE" "$DOMAINS_DOPAMINE" "Blocked domains: Dopamine-related websites"
-
-add_domains_to_host "$HOSTS_RESTRICTED_FILE" "$DOMAINS_ADULTS" "Blocked domains: Adult content websites"
-
