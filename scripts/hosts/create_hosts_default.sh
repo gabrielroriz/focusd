@@ -11,9 +11,9 @@ if [ ! -f "$HOSTS_DEFAULT_FILE" ]; then
 
     add_hosts_base_to_file "$HOSTS_DEFAULT_FILE"
 
-    add_domains_to_host "$HOSTS_DEFAULT_FILE" "$DOMAINS_SOCIAL_MEDIA" "Blocked domains: Social media websites"
-
     add_domains_to_host "$HOSTS_DEFAULT_FILE" "$DOMAINS_ADULTS" "Blocked domains: Adult content websites"
+
+    add_domains_to_host "$HOSTS_DEFAULT_FILE" "$DOMAINS_SOCIAL_MEDIA" "Blocked domains: Social media websites"
 else
     echo_success "Found $HOSTS_DEFAULT_FILE"
 fi
