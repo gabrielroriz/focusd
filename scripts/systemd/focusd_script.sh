@@ -111,8 +111,9 @@ update_hosts() {
   local USERNAME="$1"
   local TARGET_GROUP="deep-group"
 
-  local RESTRICTED_HOSTS="/etc/hosts.restricted"
-  local DEFAULT_HOSTS="/etc/hosts.default"
+  local RESTRICTED_HOSTS="/etc/focusd/hosts_profiles/hosts.restricted"
+  local DEFAULT_HOSTS="/etc/focusd/hosts_profiles/hosts.default"
+  
   local TARGET_HOSTS="/etc/hosts"
 
   if id -nG "$USERNAME" | grep -qw "$TARGET_GROUP"; then

@@ -15,6 +15,7 @@ readonly USER_FULL_NAME="Deep Worker"
 
 readonly FOCUSD_CONFIG_DIR="/etc/focusd"
 readonly FOCUSD_CONFIG_FILE="${FOCUSD_CONFIG_DIR}/focusd.conf"
+readonly FOCUSD_CONFIG_HOSTS_DIR="${FOCUSD_CONFIG_DIR}/hosts_profiles"
 
 # ------------------------------------------------------------------------------
 # Service Configuration
