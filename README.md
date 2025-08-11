@@ -7,7 +7,7 @@
 ![D-Bus](https://img.shields.io/badge/D--Bus-2C2C2C?style=flat-square)
 
 <p align="center">
-  <img src="assets/focusd_icon.svg" alt="focusd banner" width="120" height="120">
+  <img src="assets/focusd_icon--black.svg" alt="focusd banner" width="120" height="120">
 </p>
 
 <h1 align="center">
