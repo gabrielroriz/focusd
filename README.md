@@ -6,15 +6,17 @@
 ![systemd](https://img.shields.io/badge/systemd_service-3A3A3A?style=flat-square&logo=systemd&logoColor=white)
 ![D-Bus](https://img.shields.io/badge/D--Bus-2C2C2C?style=flat-square)
 
-<div align="center" style="background:#222; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
-  <img src="assets/focusd_icon.svg" alt="focusd logo" width="120" height="120">
-  <h1 style="margin-top: 10px; font-size: 2.2em; font-weight: bold; color: white;">
-  focusd
-  </h1>
-  <p style="font-size: 1.1em; color: white; margin-bottom: 0;">
-    Linux productivity tool for blocking distractions and boosting focus.
-  </p>
-</div>
+<p align="center">
+  <img src="assets/focusd_icon.svg" alt="focusd banner" width="120" height="120">
+</p>
+
+<h1 align="center">
+    <code>focusd</code>
+</h1>
+
+<p align="center">
+  <quote>Linux productivity tool for blocking distractions and boosting focus.
+</p>
 
 # Welcome
 
