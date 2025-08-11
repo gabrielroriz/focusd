@@ -1,5 +1,4 @@
 *.log
-/hosts/hosts.base
 /hosts/hosts.restricted
 /hosts/hosts.default
-/hosts/hosts.no-social
+/hosts/hosts.no_social
