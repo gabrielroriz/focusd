@@ -29,6 +29,7 @@ source "${SCRIPT_DIR}/config/create_config.sh"
 # Hosts Setup
 # -----------------------------------------------------------------------
 source "${SCRIPT_DIR}/hosts/prestart.sh"
+source "${SCRIPT_DIR}/hosts/create_hosts_backup.sh"
 source "${SCRIPT_DIR}/hosts/create_hosts_restricted.sh"
 source "${SCRIPT_DIR}/hosts/create_hosts_default.sh"
 source "${SCRIPT_DIR}/hosts/create_hosts_no_social.sh"

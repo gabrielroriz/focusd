@@ -93,8 +93,13 @@ remove_file(){
 # ------------------------------------------------------------------------------
 # Function: Append the base hosts entries to a target file
 # ------------------------------------------------------------------------------
-add_hosts_base_to_file(){
+add_hosts_base_or_backup_to_file(){
   local file="$1"
-  cat "$HOSTS_BASE_FILE" >> "$file" \
-  && echo_success "Base hosts added to $(get_filename $file)."
+  if [[ -f "$HOSTS_BACKUP_FILE" ]]; then
+    cat "$HOSTS_BACKUP_FILE" >> "$file" \
+    && echo_success "Backup hosts added to $(get_filename $file)."
+  else
+    cat "$HOSTS_BASE_FILE" >> "$file" \
+    && echo_success "Base hosts added to $(get_filename $file)."
+  fi
 }

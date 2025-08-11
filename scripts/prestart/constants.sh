@@ -44,6 +44,7 @@ readonly HOSTS_RESTRICTED_FILE="${SCRIPT_DIR}/../hosts/hosts.restricted"
 readonly HOSTS_DEFAULT_FILE="${SCRIPT_DIR}/../hosts/hosts.default"
 readonly HOSTS_BASE_FILE="${SCRIPT_DIR}/../hosts/hosts.base"
 readonly HOSTS_NO_SOCIAL_FILE="${SCRIPT_DIR}/../hosts/hosts.no_social"
+readonly HOSTS_BACKUP_FILE="/etc/hosts.backup"
 
 readonly DOMAINS_DOPAMINE="${SCRIPT_DIR}/../domains/domain-list-dopamine.txt"
 readonly DOMAINS_ADULTS="${SCRIPT_DIR}/../domains/domain-list-adults.txt"
