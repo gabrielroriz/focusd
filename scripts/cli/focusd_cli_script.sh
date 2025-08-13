@@ -58,6 +58,14 @@ ensure_hosts_dir_exists() {
   fi
 }
 
+ensure_sudo_access() {
+  if [ "$EUID" -ne 0 ]; then
+    echo "This operation requires sudo privileges."
+    exit 1
+  fi
+}
+
+
 # ======================================================================
 # SEÇÃO: Funções reutilizáveis de menu interativo
 # ======================================================================
@@ -142,6 +150,7 @@ get_focusd_config() {
 set_focusd_config() {
   ensure_config_exists
   ensure_hosts_dir_exists
+  ensure_sudo_access
 
   # Carrega perfis disponíveis
   mapfile -t hosts_profiles < <("${COMMAND_LIST_HOST_PROFILES[@]}")
