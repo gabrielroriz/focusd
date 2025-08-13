@@ -186,7 +186,6 @@ case "${1:-}" in
     set_focusd_config
     ;;
   *)
-    echo "Usage: $0 {show|set}"
-    exit 1
+    get_focusd_config
     ;;
 esac
