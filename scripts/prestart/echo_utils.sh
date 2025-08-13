@@ -34,3 +34,32 @@ echo_info(){
     local message="$1"
     echo -e "\e[34mℹ\e[0m $message"
 }
+
+# Section header (bold with border)
+# Usage: echo_header "User Setup"
+echo_header() {
+  local msg="$*"
+  local cols
+  cols=$(tput cols 2>/dev/null) || cols=${COLUMNS:-80}
+  (( cols < 20 )) && cols=80
+
+  # Linha de borda (========...)
+  local border
+  border=$(printf '%*s' "$cols" '')           # preenche com espaços
+  border=${border// /=}                       # troca espaços por '='
+
+  printf '%s\n' "$border"
+
+  # Mensagem centralizada
+  local inner=" $msg "
+  local len=${#inner}
+  if (( len >= cols )); then
+    printf '%s\n' "$inner"
+  else
+    local left=$(( (cols - len) / 2 ))
+    local right=$(( cols - len - left ))
+    printf '%*s%s%*s\n' "$left" '' "$inner" "$right" ''
+  fi
+
+  printf '%s\n' "$border"
+}

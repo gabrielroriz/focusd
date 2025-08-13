@@ -49,3 +49,10 @@ readonly HOSTS_BACKUP_FILE="/etc/hosts.backup"
 readonly DOMAINS_DOPAMINE="${SCRIPT_DIR}/../domains/domain-list-dopamine.txt"
 readonly DOMAINS_ADULTS="${SCRIPT_DIR}/../domains/domain-list-adults.txt"
 readonly DOMAINS_SOCIAL_MEDIA="${SCRIPT_DIR}/../domains/domain-list-social-media.txt"
+
+
+# ------------------------------------------------------------------------------
+# CLI Configuration
+# ------------------------------------------------------------------------------
+readonly FOCUSD_CLI_SCRIPT="${SCRIPT_DIR}/cli/focusd_cli_script.sh"
+readonly FOCUSD_CLI_BIN="/usr/local/bin/focusd"

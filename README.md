@@ -32,6 +32,9 @@ The system creates different host file profiles (default, no social media, restr
     - [Prerequisites](#prerequisites)
     - [Installing \& deployment](#installing--deployment)
     - [How it works](#how-it-works)
+  - [CLI Usage](#cli-usage)
+    - [Show current configuration](#show-current-configuration)
+    - [Change focus mode](#change-focus-mode)
   - [Roadmap](#roadmap)
     - [Completed Features](#completed-features)
   - [Done](#done)
@@ -68,6 +71,7 @@ This script will:
 - Set up configuration files in `/etc/focusd/` (`/etc/focusd/focusd.conf`)
 - Create different host file profiles (located in `/etc/focusd/hosts_profiles/`)
 - Install and enable the systemd service ( `focusd.service`)
+- Install the `focusd` CLI tool to `/usr/local/bin/focusd`
 
 ### How it works
 
@@ -80,6 +84,30 @@ This script will:
   
 3. **Dynamic Switching**: The systemd service monitors which user is active and applies the appropriate host file
 
+## CLI Usage
+
+After installation, you can use the `focusd` command-line tool to manage focus modes:
+
+### Show current configuration
+```bash
+sudo focusd show
+```
+This displays the current focusd configuration from `/etc/focusd/focusd.conf`.
+
+### Change focus mode
+```bash
+sudo focusd set
+```
+This opens an interactive menu where you can:
+- Navigate through available host profiles using arrow keys (↑ ↓)
+- Select a profile with Enter
+- Apply the new configuration instantly
+
+Available profiles:
+- **default**: Basic system hosts (no blocking)
+- **no_social**: Blocks social media platforms
+- **restricted**: Comprehensive blocking including entertainment and distraction sites
+
 ## Roadmap
 
 ### Completed Features
@@ -89,12 +117,12 @@ This script will:
 - [x] Systemd service integration  
 - [x] Multiple host file profiles (default, no-social, restricted)
 - [x] User and group management system 
-- [x] Domain list management for different categories  
+- [x] Domain list management for different categories
+- [x] **Interactive CLI tool for configuration management** ✅ **(New!)**  
 
 ## In Progress
 
 ## Planned
-- [ ] CLI Management Tool  
 - [ ] Tray App  
 - [ ] Statistics and Analytics
 - [ ] Configuration Web UI  
