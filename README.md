@@ -39,7 +39,7 @@ The system creates different host file profiles (default, no social media, restr
     - [Completed Features](#completed-features)
   - [Done](#done)
   - [In Progress](#in-progress)
-  - [Planned](#planned)
+  - [Planned-](#planned-)
     - [Future Considerations](#future-considerations)
 
 ## Getting started
@@ -122,7 +122,8 @@ Available profiles:
 
 ## In Progress
 
-## Planned
+## Planned-
+- [ ] CLI upgrade: only outside group "deep-workers" will be possible to change focusd config.
 - [ ] Tray App  
 - [ ] Statistics and Analytics
 - [ ] Configuration Web UI  

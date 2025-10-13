@@ -49,6 +49,7 @@ readonly HOSTS_BACKUP_FILE="/etc/hosts.backup"
 readonly DOMAINS_DOPAMINE="${SCRIPT_DIR}/../domains/domain-list-dopamine.txt"
 readonly DOMAINS_ADULTS="${SCRIPT_DIR}/../domains/domain-list-adults.txt"
 readonly DOMAINS_SOCIAL_MEDIA="${SCRIPT_DIR}/../domains/domain-list-social-media.txt"
+readonly DOMAINS_SOCIAL_MEDIA_LIGHT="${SCRIPT_DIR}/../domains/domain-list-social-media-light.txt"
 
 
 # ------------------------------------------------------------------------------
