@@ -14,7 +14,6 @@ readonly USER_FULL_NAME="Deep Worker"
 # ------------------------------------------------------------------------------
 
 readonly FOCUSD_CONFIG_DIR="/etc/focusd"
-readonly FOCUSD_CONFIG_FILE="${FOCUSD_CONFIG_DIR}/focusd.conf"
 readonly FOCUSD_CONFIG_HOSTS_DIR="${FOCUSD_CONFIG_DIR}/hosts_profiles"
 
 # ------------------------------------------------------------------------------
@@ -40,16 +39,17 @@ readonly ICON_TARGET_PATH="${ICON_TARGET_DIR}/${ICON_NAME}"
 # Hosts Configuration
 # ------------------------------------------------------------------------------
 
-readonly HOSTS_RESTRICTED_FILE="${SCRIPT_DIR}/../hosts/hosts.restricted"
-readonly HOSTS_DEFAULT_FILE="${SCRIPT_DIR}/../hosts/hosts.default"
 readonly HOSTS_BASE_FILE="${SCRIPT_DIR}/../hosts/hosts.base"
-readonly HOSTS_NO_SOCIAL_FILE="${SCRIPT_DIR}/../hosts/hosts.no_social"
 readonly HOSTS_BACKUP_FILE="/etc/hosts.backup"
 
-readonly DOMAINS_DOPAMINE="${SCRIPT_DIR}/../domains/domain-list-dopamine.txt"
-readonly DOMAINS_ADULTS="${SCRIPT_DIR}/../domains/domain-list-adults.txt"
-readonly DOMAINS_SOCIAL_MEDIA="${SCRIPT_DIR}/../domains/domain-list-social-media.txt"
-readonly DOMAINS_SOCIAL_MEDIA_LIGHT="${SCRIPT_DIR}/../domains/domain-list-social-media-light.txt"
+# Domain directories for two-tier blocking system
+readonly DOMAINS_ALWAYS_BLOCKED_DIR="${SCRIPT_DIR}/../domains/always-blocked"
+readonly DOMAINS_CONDITIONALLY_BLOCKED_DIR="${SCRIPT_DIR}/../domains/conditionally-blocked"
+readonly DOMAINS_WHITELISTED_DIR="${SCRIPT_DIR}/../domains/whitelisted"
+
+# State directory for unlock management
+readonly FOCUSD_STATE_DIR="/var/lib/focusd"
+readonly FOCUSD_STATE_FILE="${FOCUSD_STATE_DIR}/unlock_state"
 
 
 # ------------------------------------------------------------------------------

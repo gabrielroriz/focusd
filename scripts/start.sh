@@ -33,10 +33,16 @@ source "${SCRIPT_DIR}/config/create_config.sh"
 echo_header "Hosts Setup"
 source "${SCRIPT_DIR}/hosts/prestart.sh"
 source "${SCRIPT_DIR}/hosts/create_hosts_backup.sh"
-source "${SCRIPT_DIR}/hosts/create_hosts_restricted.sh"
-source "${SCRIPT_DIR}/hosts/create_hosts_default.sh"
-source "${SCRIPT_DIR}/hosts/create_hosts_no_social.sh"
+source "${SCRIPT_DIR}/hosts/generate_hosts_dynamic.sh"
+generate_all_hosts_profiles
 source "${SCRIPT_DIR}/hosts/update_etc_hosts.sh"
+
+# -----------------------------------------------------------------------
+# State Setup
+# -----------------------------------------------------------------------
+echo_header "State Setup"
+source "${SCRIPT_DIR}/state/state_manager.sh"
+init_unlock_state
 
 # -----------------------------------------------------------------------
 # Systemd Setup

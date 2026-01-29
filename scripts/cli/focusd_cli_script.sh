@@ -1,61 +1,49 @@
 #!/bin/bash
 
 # ======================================================================
-# SEÇÃO: Setup inicial de configuração
+# SECTION: Initial Configuration Setup
 # ======================================================================
 
-# Arquivo de configuração do Focusd
-FOCUSD_CONFIG_FILE="/etc/focusd/focusd.conf"
-
-# Pasta com os perfis de hosts
+# Folder with hosts profiles
 FOCUSD_HOSTS_DIR="/etc/focusd/hosts_profiles"
 
+# State management
+FOCUSD_STATE_DIR="/var/lib/focusd"
+FOCUSD_STATE_FILE="${FOCUSD_STATE_DIR}/unlock_state"
+
+# Source state management functions
+if [ ! -f "/usr/local/lib/focusd/state_manager.sh" ]; then
+  echo "Error: focusd is not properly installed."
+  echo "State manager library not found at /usr/local/lib/focusd/state_manager.sh"
+  echo "Please run the installation script first."
+  exit 1
+fi
+
+source "/usr/local/lib/focusd/state_manager.sh"
+
 # ======================================================================
-# SEÇÃO: Comandos utilizados no projeto
+# SECTION: Commands used in the project
 # ======================================================================
 
-# Lista arquivos "hosts.*" e remove o prefixo "hosts."
-COMMAND_LIST_HOST_PROFILES=("bash" "-c" "ls \"$FOCUSD_HOSTS_DIR\" | sed 's/^hosts\\.//'")
-
-# Obtém o UID do usuário (usado em notificações)
+# Get user UID (used in notifications)
 COMMAND_GET_UID=("id" "-u")
 
-# Obtém o DISPLAY de uma sessão gráfica do usuário
+# Get DISPLAY from user's graphical session
 COMMAND_GET_DISPLAY=("bash" "-c" "loginctl show-user \"\$1\" --property=Display --value")
 
-# Envia notificação desktop via D-Bus (executado como o usuário alvo)
-# (A montagem final dos envs ocorre na função dispatch_notify)
+# Send desktop notification via D-Bus (executed as target user)
+# (Final environment assembly occurs in dispatch_notify function)
 COMMAND_NOTIFY_SEND=("notify-send" "-i" "focusd" "Focusd")
 
 # ======================================================================
-# SEÇÃO: Variáveis de controle
-# ======================================================================
-
-selected_register=""
-
-# ======================================================================
-# SEÇÃO: Utilitários (logs e validações)
+# SECTION: Utilities (logs and validations)
 # ======================================================================
 
 echo_log_warning() {
-  # Uso: echo_log_warning "TÍTULO" "mensagem"
+  # Usage: echo_log_warning "TITLE" "message"
   local title="$1"
   local message="$2"
   >&2 echo "[WARN] ${title}: ${message}"
-}
-
-ensure_config_exists() {
-  if [ ! -f "$FOCUSD_CONFIG_FILE" ]; then
-    echo "Focusd configuration file not found: $FOCUSD_CONFIG_FILE"
-    exit 1
-  fi
-}
-
-ensure_hosts_dir_exists() {
-  if [ ! -d "$FOCUSD_HOSTS_DIR" ]; then
-    echo "Hosts profiles directory not found: $FOCUSD_HOSTS_DIR"
-    exit 1
-  fi
 }
 
 ensure_sudo_access() {
@@ -67,46 +55,7 @@ ensure_sudo_access() {
 
 
 # ======================================================================
-# SEÇÃO: Funções reutilizáveis de menu interativo
-# ======================================================================
-
-draw_menu() {
-  local title="$1"
-  shift
-  local options=("$@")
-  local options_size=$(( ${#options[@]} + 3 ))
-
-  # Ajusta altura do terminal (opcional)
-  printf "\e[8;%s;120t" "$options_size"
-
-  local selected=0
-
-  while true; do
-    clear
-    echo "$title"
-    for i in "${!options[@]}"; do
-      if [[ $i == $selected ]]; then
-        printf "  > \e[1;32m%s\e[0m\n" "${options[$i]}"
-      else
-        printf "    %s\n" "${options[$i]}"
-      fi
-    done
-
-    IFS= read -rsn1 key
-    [[ $key == $'\x1b' ]] && read -rsn2 -t 0.01 key
-
-    case "$key" in
-      "[A") ((selected--)); [[ $selected -lt 0 ]] && selected=$((${#options[@]} - 1)) ;;
-      "[B") ((selected++)); [[ $selected -ge ${#options[@]} ]] && selected=0 ;;
-      "") break ;;
-    esac
-  done
-
-  selected_register="${options[$selected]}"
-}
-
-# ======================================================================
-# SEÇÃO: Funções principais (handlers do script)
+# SECTION: Main Functions (script handlers)
 # ======================================================================
 
 dispatch_notify() {
@@ -114,7 +63,7 @@ dispatch_notify() {
   local message="$2"
 
   if [ -z "$user" ]; then
-    echo_log_warning "WARN" "Usuário alvo para notificação não informado."
+    echo_log_warning "WARN" "Target user for notification not specified."
     return 0
   fi
 
@@ -123,78 +72,128 @@ dispatch_notify() {
     return 0
   fi
 
-  # UID do usuário
+  # User UID
   local uid
   if ! uid=$("${COMMAND_GET_UID[@]}" "$user"); then
-    echo_log_warning "WARN" "Falha ao obter UID de '$user'."
+    echo_log_warning "WARN" "Failed to get UID for '$user'."
     return 0
   fi
 
-  # DISPLAY da sessão gráfica
+  # DISPLAY from graphical session
   local display
   display=$(loginctl show-user "$user" --property=Display --value)
 
-  # Endereço do D-Bus da sessão
+  # D-Bus session address
   local dbus_addr="/run/user/$uid/bus"
 
-  # Envia notificação na sessão do usuário
+  # Send notification in user's session
   sudo -u "$user" DISPLAY="$display" DBUS_SESSION_BUS_ADDRESS="unix:path=$dbus_addr" \
     "${COMMAND_NOTIFY_SEND[@]}" "$message" >/dev/null 2>&1 || true
 }
 
-get_focusd_config() {
-  ensure_config_exists
-  cat "$FOCUSD_CONFIG_FILE"
-}
-
-set_focusd_config() {
-  ensure_config_exists
-  ensure_hosts_dir_exists
+unlock_conditionally_blocked() {
   ensure_sudo_access
-
-  # Carrega perfis disponíveis
-  mapfile -t hosts_profiles < <("${COMMAND_LIST_HOST_PROFILES[@]}")
-
-  if [ "${#hosts_profiles[@]}" -eq 0 ]; then
-    echo "Nenhum perfil encontrado em: $FOCUSD_HOSTS_DIR"
+  
+  local duration="${1:-300}"
+  
+  # Validate duration (max 10 minutes = 600 seconds)
+  if ! [[ "$duration" =~ ^[0-9]+$ ]] || [ "$duration" -gt 600 ] || [ "$duration" -lt 60 ]; then
+    echo "Error: Duration must be a number between 60 and 600 seconds (1-10 minutes)"
     exit 1
   fi
-
-  # Menu de seleção
-  draw_menu "Selecione o perfil de hosts (use ↑ ↓ para navegar, Enter para confirmar):" "${hosts_profiles[@]}"
-
-  # Aplica o perfil selecionado
-  local src="$FOCUSD_HOSTS_DIR/hosts.$selected_register"
-  if [ ! -f "$src" ]; then
-    echo "Perfil inexistente: $src"
+  
+  # Set unlocked state using state_manager function
+  set_unlocked "$duration" "all"
+  
+  # Apply unlocked hosts file
+  local unlocked_hosts="$FOCUSD_HOSTS_DIR/hosts.unlocked"
+  if [ -f "$unlocked_hosts" ]; then
+    cp "$unlocked_hosts" "/etc/hosts"
+    echo "✓ Conditionally blocked sites unlocked for $((duration / 60)) minutes"
+    
+    # Notify user
+    local active_user
+    active_user=$(who | grep '(:' | awk '{print $1}' | head -n1)
+    if [ -n "$active_user" ]; then
+      dispatch_notify "$active_user" "🔓 Temporary unlock active for $((duration / 60)) minutes. Stay focused!"
+    fi
+  else
+    echo "Error: Unlocked hosts profile not found at $unlocked_hosts"
     exit 1
   fi
-
-  echo "Setting focusd configuration..."
-  cp "$src" "/etc/hosts"
-
-  # Melhor esforço para notificar o usuário logado na sessão gráfica
-  # (heurística simples com 'who'; ajuste conforme seu ambiente)
-  local active_user
-  active_user=$(who | grep '(:' | awk '{print $1}' | head -n1)
-  dispatch_notify "$active_user" "New focusd configuration has been set (hosts.$selected_register)."
-
-  sed -i "s/^mode=.*/mode=$selected_register/" "$FOCUSD_CONFIG_FILE"
-  echo "Focusd configuration updated successfully."
 }
 
-# ======================================================================
-# SEÇÃO: Processamento de argumentos (subcomandos: show | set)
-# ======================================================================
+lock_conditionally_blocked() {
+  ensure_sudo_access
+  
+  # Set locked state using state_manager function
+  set_locked
+  
+  # Apply locked hosts file
+  local locked_hosts="$FOCUSD_HOSTS_DIR/hosts.locked"
+  if [ -f "$locked_hosts" ]; then
+    cp "$locked_hosts" "/etc/hosts"
+    echo "✓ Conditionally blocked sites are now locked"
+    
+    # Notify user
+    local active_user
+    active_user=$(who | grep '(:' | awk '{print $1}' | head -n1)
+    if [ -n "$active_user" ]; then
+      dispatch_notify "$active_user" "🔒 Focus mode re-enabled. All distracting sites blocked."
+    fi
+  else
+    echo "Error: Locked hosts profile not found at $locked_hosts"
+    exit 1
+  fi
+}
+
+print_banner() {
+  cat << 'EOF'
+  __                          _  
+ / _| ___   ___ _   _ ___  __| |
+| |_ / _ \ / __| | | / __|/ _` |
+|  _| (_) | (__| |_| \__ \ (_| |
+|_|  \___/ \___|\__,_|___/\__,_|
+                                
+EOF
+  echo ""
+}
+
+show_unlock_status() {
+  print_banner
+  
+  if is_unlocked; then
+    local time_remaining
+    time_remaining=$(format_time_remaining)
+    echo "Status: 🔓 UNLOCKED"
+    echo "Time remaining: $time_remaining"
+    echo "Always-blocked sites: BLOCKED"
+    echo "Conditionally-blocked sites: ACCESSIBLE"
+  else
+    echo "Status: 🔒 LOCKED"
+    echo "Always-blocked sites: BLOCKED"
+    echo "Conditionally-blocked sites: BLOCKED"
+  fi
+  echo ""
+  echo "Use 'sudo focusd unlock [seconds]' to temporarily unlock (default: 300s = 5min)"
+  echo "Use 'sudo focusd lock' to immediately re-lock"
+}
+
+# ===============================================================================
+# SECTION: Argument Processing (subcommands: unlock | lock | status)
+# ===============================================================================
 
 case "${1:-}" in
-  show)
-    get_focusd_config
+  unlock)
+    unlock_conditionally_blocked "${2:-300}"
     ;;
-  set)
-    set_focusd_config
+  lock)
+    lock_conditionally_blocked
+    ;;
+  status)
+    show_unlock_status
     ;;
   *)
-    get_focusd_config
+    show_unlock_status
     ;;
 esac

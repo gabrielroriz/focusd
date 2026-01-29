@@ -1,0 +1,11 @@
+discord.com
+www.discord.com
+discordapp.com
+whatsapp.com
+web.whatsapp.com
+api.whatsapp.com
+telegram.org
+web.telegram.org
+t.me
+slack.com
+app.slack.com

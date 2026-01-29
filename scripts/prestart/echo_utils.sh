@@ -43,14 +43,14 @@ echo_header() {
   cols=$(tput cols 2>/dev/null) || cols=${COLUMNS:-80}
   (( cols < 20 )) && cols=80
 
-  # Linha de borda (========...)
+  # Border line (========...)
   local border
-  border=$(printf '%*s' "$cols" '')           # preenche com espaços
-  border=${border// /=}                       # troca espaços por '='
+  border=$(printf '%*s' "$cols" '')           # fill with spaces
+  border=${border// /=}                       # replace spaces with '='
 
   printf '%s\n' "$border"
 
-  # Mensagem centralizada
+  # Centered message
   local inner=" $msg "
   local len=${#inner}
   if (( len >= cols )); then
