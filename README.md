@@ -34,6 +34,7 @@ The system runs as a systemd service that monitors user sessions and enforces bl
 - [Getting started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installing \& deployment](#installing--deployment)
+  - [Uninstalling](#uninstalling)
   - [How it works](#how-it-works)
 - [CLI Usage](#cli-usage)
   - [Show unlock status](#show-unlock-status)
@@ -83,6 +84,30 @@ This script will:
 - Install the state manager library to `/usr/local/lib/focusd/`
 - Install and enable the systemd service (`focusd.service`)
 - Install the `focusd` CLI tool to `/usr/local/bin/focusd`
+
+### Uninstalling
+
+To completely remove focusd from your system:
+
+```bash
+sudo ./scripts/uninstall.sh
+```
+
+This script will:
+
+- Stop and disable the systemd service
+- Remove the `focusd` CLI tool from `/usr/local/bin/`
+- Remove the state manager library from `/usr/local/lib/focusd/`
+- Remove the executable script from `/usr/local/bin/`
+- Remove the icon from `/usr/share/icons/`
+- Remove configuration files from `/etc/focusd/`
+- Remove state files from `/var/lib/focusd/`
+- Restore the original `/etc/hosts` file from backup
+- Remove log files from `/var/log/`
+- Remove the dedicated user (`deep-worker`) and group (`deep-group`)
+- Clean up `.xprofile` configurations
+
+**Note**: After uninstallation, you should log out and log back in for all changes to take effect.
 
 ### How it works
 

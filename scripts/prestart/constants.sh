@@ -15,6 +15,7 @@ readonly USER_FULL_NAME="Deep Worker"
 
 readonly FOCUSD_CONFIG_DIR="/etc/focusd"
 readonly FOCUSD_CONFIG_HOSTS_DIR="${FOCUSD_CONFIG_DIR}/hosts_profiles"
+readonly FOCUSD_CONFIG_DOMAINS_DIR="${FOCUSD_CONFIG_DIR}/domain_lists"
 
 # ------------------------------------------------------------------------------
 # Service Configuration
@@ -45,6 +46,7 @@ readonly HOSTS_BACKUP_FILE="/etc/hosts.backup"
 # Domain directories for two-tier blocking system
 readonly DOMAINS_ALWAYS_BLOCKED_DIR="${SCRIPT_DIR}/../domains/always-blocked"
 readonly DOMAINS_CONDITIONALLY_BLOCKED_DIR="${SCRIPT_DIR}/../domains/conditionally-blocked"
+readonly DOMAINS_EXTENDED_UNLOCKABLE_DIR="${SCRIPT_DIR}/../domains/extended-unlockable"
 readonly DOMAINS_WHITELISTED_DIR="${SCRIPT_DIR}/../domains/whitelisted"
 
 # State directory for unlock management

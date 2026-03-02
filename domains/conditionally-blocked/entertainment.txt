@@ -722,7 +722,6 @@
 *.y.com.cm
 *.yahoo.com
 *.yewtu.be
-*.youtube.com
 *.yt.cyberhost.uk
 *.ytb.trom.tf
 *.ytprivate.com
@@ -1456,7 +1455,6 @@ xpwo2md4lgxs3hvroqi6wg33h6a3pv47euax6km3alke7letglieokyd.onion
 y.com.cm
 yahoo.com
 yewtu.be
-youtube.com
 yt.cyberhost.uk
 ytb.trom.tf
 ytprivate.com
