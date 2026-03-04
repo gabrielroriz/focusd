@@ -18,7 +18,7 @@
   <quote>Linux productivity tool for blocking distractions and boosting focus.
 </p>
 
-## Welcome
+## Welcome!!!!
 
 `focusd` is a Linux productivity tool that helps users maintain focus by blocking distracting websites and services. It works by managing the `/etc/hosts` file with a two-tier blocking system:
 
@@ -29,7 +29,7 @@ The system runs as a systemd service that monitors user sessions and enforces bl
 
 ## Table of contents
 
-- [Welcome](#welcome)
+- [Welcome!!!!](#welcome)
 - [Table of contents](#table-of-contents)
 - [Getting started](#getting-started)
   - [Prerequisites](#prerequisites)
