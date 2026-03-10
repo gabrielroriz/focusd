@@ -1,5 +1,5 @@
 # Focusd dynamic hosts file - Level: locked
-# Generated: Thu Jan 29 11:19:51 AM -03 2026
+# Generated: Tue Mar 10 04:28:40 PM -03 2026
 
 
 127.0.0.1	localhost
@@ -13949,7 +13949,6 @@ ff02::2 ip6-allrouters
 0.0.0.0	y.com.cm
 0.0.0.0	yahoo.com
 0.0.0.0	yewtu.be
-0.0.0.0	youtube.com
 0.0.0.0	yt.cyberhost.uk
 0.0.0.0	ytb.trom.tf
 0.0.0.0	ytprivate.com
@@ -14679,7 +14678,6 @@ ff02::2 ip6-allrouters
 0.0.0.0	y.com.cm
 0.0.0.0	yahoo.com
 0.0.0.0	yewtu.be
-0.0.0.0	youtube.com
 0.0.0.0	yt.cyberhost.uk
 0.0.0.0	ytb.trom.tf
 0.0.0.0	ytprivate.com
@@ -14687,6 +14685,7 @@ ff02::2 ip6-allrouters
 0.0.0.0	zombs.io
 0.0.0.0	zoopla.co.uk
 0.0.0.0	whatsapp.com
+0.0.0.0	linkedin.com
 0.0.0.0	linkedin.com
 
 
@@ -14778,11 +14777,6 @@ ff02::2 ip6-allrouters
 0.0.0.0	www.pinterest.com
 0.0.0.0	tumblr.com
 0.0.0.0	www.tumblr.com
-0.0.0.0	youtube.com
-0.0.0.0	www.youtube.com
-0.0.0.0	youtu.be
-0.0.0.0	m.youtube.com
-0.0.0.0	youtube-nocookie.com
 
 
 # Category: streaming

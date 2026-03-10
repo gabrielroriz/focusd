@@ -81,6 +81,7 @@ This script will:
 - Generate dynamic host file profiles in `/etc/focusd/hosts_profiles/`:
   - `hosts.locked`: Full blocking mode (always-blocked + conditionally-blocked domains)
   - `hosts.unlocked`: Partial unlock mode (only always-blocked domains)
+- Refresh the system DNS cache so the new `/etc/hosts` entries apply immediately when supported
 - Install the state manager library to `/usr/local/lib/focusd/`
 - Install and enable the systemd service (`focusd.service`)
 - Install the `focusd` CLI tool to `/usr/local/bin/focusd`
@@ -191,4 +192,3 @@ Forces immediate re-lock of all conditionally-blocked sites, canceling any activ
 - Support for additional Linux distributions
 - Integration with popular productivity frameworks (Pomodoro, time blocking)
 - Team/organization deployment tools
-

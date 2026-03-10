@@ -58,3 +58,24 @@ source "${SCRIPT_DIR}/systemd/run_service.sh"
 # -----------------------------------------------------------------------
 echo_header "CLI Setup"
 source "${SCRIPT_DIR}/cli/install_cli.sh"
+
+# -----------------------------------------------------------------------
+# DNS Cache Refresh
+# -----------------------------------------------------------------------
+echo_header "DNS Cache Refresh"
+
+if command -v resolvectl >/dev/null 2>&1; then
+    if resolvectl flush-caches; then
+        echo_success "System DNS cache flushed."
+    else
+        echo_warn "Failed to flush DNS cache with resolvectl."
+    fi
+elif command -v systemd-resolve >/dev/null 2>&1; then
+    if systemd-resolve --flush-caches; then
+        echo_success "System DNS cache flushed."
+    else
+        echo_warn "Failed to flush DNS cache with systemd-resolve."
+    fi
+else
+    echo_info "No supported DNS cache flush command found. Flush DNS manually if hosts changes do not apply immediately."
+fi
