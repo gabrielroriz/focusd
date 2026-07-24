@@ -1,5 +1,5 @@
 # Focusd dynamic hosts file - Level: locked
-# Generated: Tue Mar 10 04:28:40 PM -03 2026
+# Generated: Fri Jul 24 07:43:59 PM -03 2026
 
 
 127.0.0.1	localhost
@@ -14712,43 +14712,6 @@ ff02::2 ip6-allrouters
 0.0.0.0	www.kongregate.com
 0.0.0.0	newgrounds.com
 0.0.0.0	www.newgrounds.com
-
-
-# Category: news
-0.0.0.0	cnn.com
-0.0.0.0	www.cnn.com
-0.0.0.0	foxnews.com
-0.0.0.0	www.foxnews.com
-0.0.0.0	bbc.com
-0.0.0.0	www.bbc.com
-0.0.0.0	bbc.co.uk
-0.0.0.0	nytimes.com
-0.0.0.0	www.nytimes.com
-0.0.0.0	washingtonpost.com
-0.0.0.0	www.washingtonpost.com
-0.0.0.0	theguardian.com
-0.0.0.0	www.theguardian.com
-0.0.0.0	reuters.com
-0.0.0.0	www.reuters.com
-0.0.0.0	apnews.com
-0.0.0.0	www.apnews.com
-0.0.0.0	nbcnews.com
-0.0.0.0	www.nbcnews.com
-0.0.0.0	abcnews.go.com
-0.0.0.0	www.abcnews.go.com
-0.0.0.0	cbsnews.com
-0.0.0.0	www.cbsnews.com
-0.0.0.0	usatoday.com
-0.0.0.0	www.usatoday.com
-0.0.0.0	huffpost.com
-0.0.0.0	www.huffpost.com
-0.0.0.0	buzzfeed.com
-0.0.0.0	www.buzzfeed.com
-0.0.0.0	buzzfeednews.com
-0.0.0.0	vice.com
-0.0.0.0	www.vice.com
-0.0.0.0	vox.com
-0.0.0.0	www.vox.com
 
 
 # Category: shopping
