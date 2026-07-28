@@ -1,5 +1,5 @@
 # Focusd dynamic hosts file - Level: unlocked
-# Generated: Fri Apr 17 07:54:27 PM -03 2026
+# Generated: Mon Jul 27 10:17:10 PM -03 2026
 
 
 127.0.0.1	localhost
@@ -13213,8 +13213,6 @@ ff02::2 ip6-allrouters
 0.0.0.0	www.twitter.com
 0.0.0.0	x.com
 0.0.0.0	www.x.com
-0.0.0.0	reddit.com
-0.0.0.0	www.reddit.com
 0.0.0.0	snapchat.com
 0.0.0.0	www.snapchat.com
 0.0.0.0	web.snapchat.com
@@ -13222,3 +13220,14 @@ ff02::2 ip6-allrouters
 0.0.0.0	www.threads.net
 0.0.0.0	twitch.tv
 0.0.0.0	www.twitch.tv
+
+
+# Category: social-media-moderate
+0.0.0.0	linkedin.com
+0.0.0.0	www.linkedin.com
+0.0.0.0	linkedin.com
+0.0.0.0	linkedin.com
+0.0.0.0	pinterest.com
+0.0.0.0	www.pinterest.com
+0.0.0.0	tumblr.com
+0.0.0.0	www.tumblr.com

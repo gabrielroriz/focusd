@@ -1,5 +1,7 @@
 linkedin.com
 www.linkedin.com
+linkedin.com
+*.linkedin.com
 pinterest.com
 www.pinterest.com
 tumblr.com

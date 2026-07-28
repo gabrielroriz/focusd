@@ -13,8 +13,6 @@ twitter.com
 www.twitter.com
 x.com
 www.x.com
-reddit.com
-www.reddit.com
 snapchat.com
 www.snapchat.com
 web.snapchat.com
