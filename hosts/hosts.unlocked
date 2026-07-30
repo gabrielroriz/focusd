@@ -1,5 +1,5 @@
 # Focusd dynamic hosts file - Level: unlocked
-# Generated: Mon Jul 27 10:17:10 PM -03 2026
+# Generated: Thu Jul 30 01:57:59 PM -03 2026
 
 
 127.0.0.1	localhost
@@ -13220,14 +13220,3 @@ ff02::2 ip6-allrouters
 0.0.0.0	www.threads.net
 0.0.0.0	twitch.tv
 0.0.0.0	www.twitch.tv
-
-
-# Category: social-media-moderate
-0.0.0.0	linkedin.com
-0.0.0.0	www.linkedin.com
-0.0.0.0	linkedin.com
-0.0.0.0	linkedin.com
-0.0.0.0	pinterest.com
-0.0.0.0	www.pinterest.com
-0.0.0.0	tumblr.com
-0.0.0.0	www.tumblr.com
